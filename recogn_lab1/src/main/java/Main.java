@@ -1,12 +1,14 @@
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
-    static double noise = 0.5;
-    static int size1 = 100;
-    static int size2 = 100;
+    static double noise = 0.1;
+    static int size1 = 6;
+    static int size2 = 6;
     static int steps = 100;
     static String fifth = "off";
 
@@ -41,20 +43,27 @@ public class Main {
         }
 
         //converting ethalones to int array
-        int [][] ethInt = new int[eth.length][eth[0].length];
+        int [][] ethInt1 = new int[eth.length][eth[0].length];
         for (int i = 0; i < eth.length; i++){
             for (int j = 0; j < eth[i].length; j++){
                 if (!eth[i][j].equals(""))
-                    ethInt[i][j] = Integer.valueOf(eth[i][j]);
+                    ethInt1[i][j] = Integer.valueOf(eth[i][j]);
             }
         }
         //steps
-        for (int k = 1; k <= steps; k++) {
+        for (int k = 1; k <= 100; k++) {
+
+            int ethInt[][] = new int[ethInt1.length][ethInt1[0].length];
+            for(int i=0; i<ethInt1.length; i++)
+                for(int j=0; j<ethInt1[i].length; j++)
+                    ethInt[i][j]=ethInt1[i][j];
+
             first.getConnection().send("Ready");
             synchronized (first) {
                 first.wait();
                 result = first.responseFromServer();
             }
+            System.out.println(result);
             //parsing num array
             String numRes[] = result.split("[ \\n]");
 
