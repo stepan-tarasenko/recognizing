@@ -15,7 +15,7 @@ public class Main {
 
         String result = "";
 
-        LabClient first = new LabClient( new URI( "wss://sprs.herokuapp.com/first/stepan_tarasenko" ));
+        LabClient first = new LabClient( new URI( "wss://sprs.herokuapp.com/first/stepan_tarasenkooooo" ));
         first.connect();
         while (!first.isOpen());
         first.getConnection().send("Let's start");
@@ -88,6 +88,12 @@ public class Main {
             }
             System.out.println(result);
         }
+        first.getConnection().send("Bye");
+        synchronized (first) {
+            first.wait();
+            result = first.responseFromServer();
+        }
+        System.out.println(result);
     }
 
     private static String getMaxElementIndex(Object[] arr) {
